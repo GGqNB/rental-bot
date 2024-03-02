@@ -1,0 +1,7 @@
+venv\Scripts\activate.bat
+python -m venv venv
+
+alembic upgrade head
+alembic revision --autogenerate -m " "
+uvicorn src.main:app --reload --port 8001
+alembic downgrade -1
