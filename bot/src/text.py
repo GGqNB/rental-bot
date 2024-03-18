@@ -19,4 +19,4 @@ delete_cart_error = 'Удаление не вышло, попробуйте сн
 empty_cart_on_push = 'Коризина пуста, нечего отправлять, положите еще)'
 error_text='Ошибка, не предвидена, простите'
 request_user_input = 'Напишите, комментарий для отправки корзины'
-main_photo = 'AgACAgIAAxkBAANhZcsZsEWiKMb05Qz_qMkCxUnB4g0AAmbdMRu42VlKphWnCRgjBncBAAMCAAN4AAM0BA'
+main_photo = 'AgACAgIAAxkBAAIBumX4K8CgK_4OVymN2PkL8O6i4TFhAAKL2DEbhkvAS9-QUTBWVtN1AQADAgADeQADNAQ'

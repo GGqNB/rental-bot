@@ -1,8 +1,11 @@
 import requests
 from config import BACK_URL
+from config import API_KEY
+
+headers = {'Access_token': API_KEY}
 
 async def request_product(id : str):
-    response = requests.get(BACK_URL+'/product/get_products/'+id)
+    response = requests.get(BACK_URL+'/product/get_products/'+id, headers=headers)
     
     if response.status_code == 200:
         data = response.json()
@@ -11,7 +14,7 @@ async def request_product(id : str):
         return data
 
 async def my_cart(user_id : str):
-    response = requests.get(BACK_URL+'/cart/get_cart/'+user_id)
+    response = requests.get(BACK_URL+'/cart/get_cart/'+user_id, headers=headers)
     if response.status_code == 200:
         data = response.json()
         print(data)
@@ -20,7 +23,7 @@ async def my_cart(user_id : str):
     else:
         return data
 
-async def add_cart(product_id, user_id):
+async def add_cart(product_id, user_id, headers=headers):
     # print(user_id)
     # print('ПРОДУКТ'+product_id)
     url = BACK_URL + '/cart/add_carts'
@@ -37,7 +40,7 @@ async def add_cart(product_id, user_id):
         return None
 
 async def clear_cart(user_id):
-    response = requests.delete(BACK_URL+'/cart/delete_cart_user/'+user_id)
+    response = requests.delete(BACK_URL+'/cart/delete_cart_user/'+user_id, headers=headers)
     
     if response.status_code == 200:
         print(response)

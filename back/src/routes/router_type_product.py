@@ -6,6 +6,8 @@ from fastapi import APIRouter
 from sqlalchemy import insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.database import get_async_session
+from src.auth import get_api_key
+from fastapi.security.api_key import APIKey
 
 
 router_type_product = APIRouter(
@@ -17,6 +19,7 @@ router_type_product = APIRouter(
 @router_type_product.get("/get_all_type_products")
 async def get_all_type_products(
     session: AsyncSession = Depends(get_async_session),
+    api_key: APIKey = Depends(get_api_key)
 ):
     try:
         query = select(type_products)
@@ -40,6 +43,7 @@ async def get_all_type_products(
 async def add_type_products(
     # new_type_products: BaseTypeProductSchemas,
     session: AsyncSession = Depends(get_async_session),
+    api_key: APIKey = Depends(get_api_key)
 ):
     try:
         fake_types = [

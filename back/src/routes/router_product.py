@@ -7,6 +7,8 @@ from sqlalchemy import delete, insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.database import get_async_session
 from src.models.models import cart
+from src.auth import get_api_key
+from fastapi.security.api_key import APIKey
 
 
 router_product = APIRouter(
@@ -17,6 +19,7 @@ router_product = APIRouter(
 @router_product.get("/get_all_products")
 async def get_all_products(
     session: AsyncSession = Depends(get_async_session),
+    api_key: APIKey = Depends(get_api_key)
 ):
 
         query = select(products)
@@ -34,6 +37,7 @@ async def get_all_products(
 async def get_products_by_type(
         type_products_id: int,
         session: AsyncSession = Depends(get_async_session),
+        api_key: APIKey = Depends(get_api_key)
 ):
     try:
         query = select(products).where(
@@ -58,6 +62,7 @@ async def get_products_by_type(
 async def add_products(
     new_products: BaseProductSchemas,
     session: AsyncSession = Depends(get_async_session),
+    api_key: APIKey = Depends(get_api_key)
 ):
     try:
         stmt = insert(products).values(**new_products.model_dump()).returning(products.c.id)
@@ -84,6 +89,7 @@ async def add_products(
 async def delete_product( 
         id: int, 
         session: AsyncSession = Depends(get_async_session), 
+        api_key: APIKey = Depends(get_api_key)
 ): 
     try: 
         query = delete(products).where( 

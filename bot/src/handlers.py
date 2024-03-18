@@ -23,6 +23,7 @@ async def start_handler(msg: Message):
         caption=text.greet.format(name=msg.from_user.full_name),
         reply_markup=kb.menu
         )
+    # await msg.answer(text = 'qweq')
     # await msg.answer(text.greet.format(name=msg.from_user.full_name), reply_markup=kb.menu)
     
 
@@ -56,7 +57,7 @@ async def photo_hadnler(msg: Message):
 async def show_rent(clbck: CallbackQuery):
    await clbck.message.delete()
    await clbck.message.answer(
-       text='-', 
+       text='ㅤ', 
        reply_markup=kb.exit_kb)
    
    await clbck.message.answer(

@@ -5,8 +5,10 @@ from fastapi import Depends, HTTPException
 from fastapi import APIRouter
 from sqlalchemy import insert, select, delete
 from sqlalchemy.ext.asyncio import AsyncSession
+from src.auth import get_api_key
 from src.database import get_async_session
-
+from fastapi.security.api_key import APIKey
+import auth
 
 router_cart = APIRouter(
     prefix="/cart",
@@ -16,6 +18,7 @@ router_cart = APIRouter(
 @router_cart.get("/get_all_cart")
 async def get_all_cart(
     session: AsyncSession = Depends(get_async_session),
+    api_key: APIKey = Depends(get_api_key)
 ):
     query = select(cart)
     result = await session.execute(query)
@@ -32,6 +35,7 @@ async def get_all_cart(
 async def get_cart_by_user(
         user_id: str,
         session: AsyncSession = Depends(get_async_session),
+        api_key: APIKey = Depends(get_api_key)
 ):
     try:
         query = select(cart).where(
@@ -71,6 +75,7 @@ async def get_cart_by_user(
 async def add_cart(
     new_products: BaseCartSchemas,
     session: AsyncSession = Depends(get_async_session),
+    api_key: APIKey = Depends(get_api_key)
 ):
     # try:
         stmt = insert(cart).values(**new_products.model_dump()).returning(cart.c.id)
@@ -97,6 +102,7 @@ async def add_cart(
 async def delete_cart( 
         cart_id: int, 
         session: AsyncSession = Depends(get_async_session), 
+        api_key: APIKey = Depends(get_api_key),
 ): 
     try: 
         query = delete(cart).where( 
@@ -118,6 +124,7 @@ async def delete_cart(
 async def delete_all_carts_by_user( 
         user_id: str, 
         session: AsyncSession = Depends(get_async_session), 
+        api_key: APIKey = Depends(get_api_key),
 ): 
     try: 
         query = delete(cart).where( 
@@ -139,6 +146,7 @@ async def delete_all_carts_by_user(
 async def delete_all_carts_by_product( 
         product_id: int, 
         session: AsyncSession = Depends(get_async_session), 
+        api_key: APIKey = Depends(get_api_key),
 ): 
     try: 
         query = delete(cart).where( 
